@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "hellkisss",
+    "password":"{Okijuhyg54}",
+    "database": "groupomania2",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "hellkisss",
+    "password": "{Okijuhyg54}",
+    "database": "groupomania2",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "hellkisss",
+    "password": "{Okijuhyg54}",
+    "database": "groupomania2",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

@@ -26,18 +26,27 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
+   
     email: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    role:  {
+    username: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    bio:  {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    picture: {
+      type: DataTypes.STRING,
+      defaultValue:'../images/profil/default_profil.png',
+      allowNull: true
+      },
+    password: DataTypes.STRING,
+    isAdmin: DataTypes.INTEGER
+  
   }, {
     sequelize,
     tableName:'users',

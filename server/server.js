@@ -1,4 +1,5 @@
 const express = require('express')
+const apiRouter = require('./apiRouter').router;
 
 const { sequelize, User, Post } = require('./models')
 const models = require('./models')
@@ -8,20 +9,8 @@ const app = express()
 
 app.use(express.json())
 
-app.post('/user', async(req,res)=>{
+app.use('/api/',apiRouter);
 
-    const {name,email,role} = req.body
-
-    try {
-        const user = await User.create({name,email,role})
-
-        return res.status(200).json(user)
-    } catch (error) {
-        console.log(error)
-
-        return res.status(500).json(error)
-    }
-})
 
 app.get('/users', async(req,res)=>{
 
@@ -36,20 +25,6 @@ app.get('/users', async(req,res)=>{
     }
 })
 
-app.get('/users/:uuid', async(req,res)=>{
-    const uuid = req.params.uuid
-    try {
-        const user = await User.findOne({
-            where: {uuid}
-        })
-
-        return res.status(200).json(user)
-    } catch (error) {
-        console.log(error)
-
-        return res.status(500).json({error:'something went wrong'})
-    }
-})
 
 app.post('/posts', async(req,res)=>{
     const {userUuid, body} = req.body

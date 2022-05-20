@@ -13,17 +13,30 @@ module.exports = {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-      name: {
-        type: Datatypes.STRING,
-        allowNull: false
-      },
       email: {
         type: Datatypes.STRING,
         allowNull: false
       },
-      role: {
+      username: {
+        allowNull: false,
+        type: Datatypes.STRING
+      },
+       bio: {
+        allowNull: true,
+        type: Datatypes.STRING
+      },
+      picture: {
+        allowNull: true,
         type: Datatypes.STRING,
-        allowNull: false
+        defaultValue:'../images/profil/default_profil.png',
+        
+      },password: {
+        allowNull: false,
+        type: Datatypes.STRING
+      },
+      isAdmin: {
+        allowNull: false,
+        type: Datatypes.INTEGER
       },
       createdAt: {
         allowNull: false,

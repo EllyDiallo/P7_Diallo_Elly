@@ -24,11 +24,25 @@ module.exports = {
         },
         defaultValue:0
       },
-      body: {
+      title: {
         allowNull: false,
         type: Datatypes.STRING
-        
       },
+      content: {
+        allowNull: false,
+        type: Datatypes.STRING
+      },
+      attachment: {
+        allowNull: true,
+        type: Datatypes.STRING,
+        defaultValue:'../images/profil/default_profil.png'
+      },
+      likes: {
+        allowNull: false,
+        type: Datatypes.INTEGER,
+        defaultValue: 0
+      },
+     
       createdAt: {
         allowNull: false,
         type: Datatypes.DATE

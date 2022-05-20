@@ -26,15 +26,32 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    body: {
-      type: DataTypes.STRING,
-      allownull: false
-  },
+    
     userId:{
       type: DataTypes.INTEGER,
       allowNull:false,
        
+    },
+    title: {
+      type: DataTypes.STRING,
+      allownull: false
+  },
+    content: {
+      type: DataTypes.STRING,
+      allownull: false
+    },
+    attachment: {
+      type: DataTypes.STRING,
+      allownull: true,
+      defaultValue:'../images/profil/default_profil.png'
+    },
+    likes: {
+        
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
       }
+    
   }, {
     sequelize,
     tableName:'posts',

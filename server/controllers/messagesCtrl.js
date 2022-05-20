@@ -1,5 +1,5 @@
 //const models = require('../models');
-const {Message, User} = require('../models');
+const {Message, User,Post} = require('../models');
 const jwtUtils = require('../utils/jwt.utils');
 const asyncLib = require('async');
 const messageValidation = require('../validations/validation-message');
@@ -11,78 +11,42 @@ const ITEMS_LIMIT   = 50;
 
 
 module.exports = {
-    createMessage: function(req,res){
-        var headerAuth  = req.headers['authorization'];
-        var userId      = jwtUtils.getUserId(headerAuth);
-
-        const {body} = req;
-
-        const {error} = messageValidation(body);
-        if(error) return res.status(401).json(error.details.map(i => i.message).join(','))
-
-        const title = req.body.title;
-        const content = req.body.content;
-        const attachment = req.body.attachment;
+    createMessage:  async (req,res) => {
         
+    const {userUuid, title, content, likes} = req.body
 
-        asyncLib.waterfall([
-            function(callback) {
-                    User.findOne({
-                where: { id: userId }
-                })
-                .then(function(userFound) {
-                  console.log(userFound);
-                callback(null, userFound);
-                })
-                .catch(function(err) {
-                return res.status(500).json({ 'error': 'unable to verify user 1'});
-                });
-            },
-            function(userFound, callback) {
-                if(userFound) {
-                      Message.create({
-                    title  : title,
-                    content: content,
-                    likes  : 0,
-                    userId : userFound.id
-                })
-                .then(function(newMessage) {
-                    callback(newMessage);
-                })
-                 .catch(function(err) {
-                  return res.status(500).json(console.log(err));;
-                })} else {
-                res.status(404).json({ 'error': 'user not found' });
-                }
-            },
-            ], function(newMessage) {
-            if (newMessage) {
-                return res.status(201).json(newMessage);
-            } else {
-                return res.status(500).json({ 'error': 'cannot post message' });
-            }
-            }
-        );
+    try {
+        const user = await User.findOne({where: {uuid: userUuid}})
+
+        const post = await Post.create({title,content,likes, userId: user.id})
+
+        return res.status(200).json(post)
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error: 'something went wrong' })
+        
+    }
+    
+
     },
-    listMessages: function(req, res) {
+    listMessages: async (req, res) => {
   
-
-          Message.findAll({
-      attributes: [ 'title','content','attachment' ],
-      include    : [{
-          model: User,
-          attributes: ['username']
+        try {
+        const posts = await Post.findAll({
+            include: [
+              { model: User ,
+                as:'user' ,
+                attributes: ["username","picture"]},
+            ]
         }
-      ]
-      }).then(function(messages) {
-      if (messages) {
-        res.status(200).json(messages);
-      } else {
-        res.status(404).json({ "error": "no messages found" });
-      }
-    }).catch(function(err) {
-      console.log(err);
-      res.status(500).json({ "error": "invalid fields" });
-    });
+        )
+
+        return res.status(200).json(posts)
+    } catch (error) {
+        console.groupCollapsed(error)
+        res.status(500).json({error: 'something went wrong' })
+    }
+     
   }
 }

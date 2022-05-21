@@ -145,6 +145,27 @@ module.exports = {
         
       }
     },
+
+    getAllprofiles: async (req,res) =>{
+
+    try {
+      
+      const users = await User.findAll({
+
+        include: [
+              { model: Post ,
+                as:'posts' ,
+                attributes: ["title","content"]},
+            ],
+            attributes: ["username"]
+      })
+      return res.json(users)
+      
+    } catch (error) {
+
+      return res.status(500).json( error + " unable to get aall users")
+    }
+    },
   updateUserProfile: async (req, res) => {
 
     const {body} = req;

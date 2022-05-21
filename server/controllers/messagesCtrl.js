@@ -18,7 +18,7 @@ module.exports = {
     try {
         const user = await User.findOne({where: {uuid: userUuid}})
 
-        const post = await Post.create({title,content,likes, userId: user.id})
+        const post = await Post.create({ title, content, likes, userId: user.id})
 
         return res.status(200).json(post)
 
@@ -27,11 +27,8 @@ module.exports = {
         res.status(500).json({error: 'something went wrong' })
         
     }
-    
-
     },
     listMessages: async (req, res) => {
-  
         try {
         const posts = await Post.findAll({
             include: [
@@ -41,12 +38,10 @@ module.exports = {
             ]
         }
         )
-
         return res.status(200).json(posts)
     } catch (error) {
         console.groupCollapsed(error)
         res.status(500).json({error: 'something went wrong' })
     }
-     
   }
 }

@@ -17,6 +17,8 @@ exports.router = (function(){
     apiRouter.route('/users/:uuid').put(auth,usersCtrl.updateUserProfile);
     apiRouter.route('/users/logout/:uuid').get(auth,usersCtrl.logout);
     apiRouter.route('/users/delete/:uuid').delete(auth,usersCtrl.deleteUser);
+    apiRouter.route('/users').get(usersCtrl.getAllprofiles);
+    
 
     apiRouter.route('/message/new').post(messageCtrl.createMessage);
     apiRouter.route('/messages').get(messageCtrl.listMessages);

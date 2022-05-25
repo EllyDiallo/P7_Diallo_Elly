@@ -1,5 +1,5 @@
 //const models = require('../models');
-const {Message, User,Post} = require('../models');
+const {User,Post} = require('../models');
 const jwtUtils = require('../utils/jwt.utils');
 const asyncLib = require('async');
 const messageValidation = require('../validations/validation-message');
@@ -11,12 +11,14 @@ const ITEMS_LIMIT   = 50;
 
 
 module.exports = {
-    createMessage:  async (req,res) => {
+    createPost:  async (req,res) => {
+
+    const uuid = req.params.uuid;
         
-    const {userUuid, title, content, likes} = req.body
+    const { title, content, likes} = req.body
 
     try {
-        const user = await User.findOne({where: {uuid: userUuid}})
+        const user = await User.findOne({where: {uuid}})
 
         const post = await Post.create({ title, content, likes, userId: user.id})
 
@@ -28,19 +30,19 @@ module.exports = {
         
     }
     },
-    listMessages: async (req, res) => {
+    listPosts: async (req, res) => {
         try {
         const posts = await Post.findAll({
             include: [
               { model: User ,
                 as:'user' ,
-                attributes: ["username","picture"]},
+                attributes: ["username","picture","uuid"]},
             ]
         }
         )
         return res.status(200).json(posts)
     } catch (error) {
-        console.groupCollapsed(error)
+        console.log(error)
         res.status(500).json({error: 'something went wrong' })
     }
   }

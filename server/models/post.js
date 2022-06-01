@@ -1,5 +1,6 @@
 'use strict';
-const {User,Comment} = require('../models')
+const models = require('../models');
+
 const {
   Model
 } = require('sequelize');
@@ -10,16 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Comment }) {
+    static associate(models) {
       // define association here
-      this.belongsTo(User,{
+      this.belongsTo(models.User,{
         foreignKey:'userId',
         as:'user'
       });
-      this.hasMany(Comment, {
+      this.hasMany(models.Comment, {
         foreignKey:'postId',
         as:'comments'
-      })
+      });
+      this.hasMany(models.Like, {
+        foreignKey:'postId',
+        as:'likess'
+      });
     }
     toJSON(){
       return {...this.get()}

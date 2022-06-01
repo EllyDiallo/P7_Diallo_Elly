@@ -1,12 +1,16 @@
 //Import
 const bcrypt = require("bcrypt");
 const jwtUtils = require('../utils/jwt.utils');
+const jwt = require('jsonwebtoken');
 //const models = require('../models');
 const {Post, User} = require('../models');
+const auth = require('../middlewares/auth')
 
 const userValidation = require('../validations/validations-user');
 const asyncLib = require('async');
 const user = require("../models/user");
+
+const JWT_SIGN_TOKEN = 'bienheureuxestceluiquinesaitpasquilestriste';
 
 module.exports = {
     
@@ -131,11 +135,18 @@ module.exports = {
     },
     
    getUserProfile  : async (req, res) => {
-      const uuid = req.params.uuid;
+
+        /*const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, JWT_SIGN_TOKEN);
+        const uuid = decodedToken.uuid;
+    
+      const uuid = req.params.uuid;*/
+      const uuid = jwtUtils.getUserUuid(req);
+
       try {
         const user = await User.findOne({
           attributes: ['uuid','username','bio','picture'],
-          where: {uuid}
+          where: {uuid: uuid}
         })
         return res.json(user)
 

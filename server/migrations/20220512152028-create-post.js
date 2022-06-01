@@ -1,5 +1,5 @@
 'use strict';
-const User = require('../models')
+
 var DataTypes = require('sequelize/lib/data-types');
 module.exports = {
   async up(queryInterface, Datatypes) {
@@ -13,7 +13,7 @@ module.exports = {
       uuid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
-    },
+      },
       userId:{
         type: DataTypes.INTEGER,
         allowNull:false,

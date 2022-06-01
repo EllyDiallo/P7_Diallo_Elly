@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, JWT_SIGN_TOKEN);
         const userUuid = decodedToken.uuid;
-        if (req.params.uuid && req.params.uuiid != userUuid) {
+        if (req.body.userUuid && req.body.userUuid != userUuid) {
             throw 'Invalid user ID !'
         } else {
             next();

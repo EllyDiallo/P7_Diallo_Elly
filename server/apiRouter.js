@@ -4,6 +4,7 @@ const usersCtrl = require('./controllers/usersCtrl');
 const postsCtrl = require('./controllers/postsCtrl');
 const commentsCtrl = require('./controllers/commentsCtrl')
 const auth = require('./middlewares/auth');
+const likesCtrl = require('./controllers/likesCtrl');
 
 
 
@@ -14,7 +15,7 @@ exports.router = (function(){
     //Users routes
     apiRouter.route('/users/register').post(usersCtrl.register);
     apiRouter.route('/users/login').post(usersCtrl.login);
-    apiRouter.route('/users/:uuid').get(auth,usersCtrl.getUserProfile);
+    apiRouter.route('/user').get(auth,usersCtrl.getUserProfile);
     apiRouter.route('/users/:uuid').put(auth,usersCtrl.updateUserProfile);
     apiRouter.route('/users/logout/:uuid').get(auth,usersCtrl.logout);
     apiRouter.route('/users/delete/:uuid').delete(auth,usersCtrl.deleteUser);
@@ -26,6 +27,10 @@ exports.router = (function(){
 
 
     apiRouter.route('/comment/new/:uuid').post(commentsCtrl.createComment);
+    apiRouter.route('/comment/new/:uuid').put(commentsCtrl.updateComment);
+    
+
+    apiRouter.route('/like/:uuid').post(likesCtrl.likePost);
 
 
 

@@ -1,5 +1,5 @@
 const {User,Post, Comment} = require('../models');
-const asyncLib = require('async');
+
 
 
 
@@ -44,6 +44,10 @@ module.exports = {
 
        
     
+    },
+
+    updateComment: async (req,res) => {
+
     }
         
 }

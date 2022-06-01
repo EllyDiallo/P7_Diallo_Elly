@@ -1,7 +1,8 @@
 'use strict';
+
 module.exports = {
   async up(queryInterface, DataTypes) {
-    await queryInterface.createTable('Comments', {
+    await queryInterface.createTable('Likes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -30,8 +31,9 @@ module.exports = {
           key:"id"
         },
       },
-      text: {
-        type: DataTypes.STRING
+      likeNumber: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +46,6 @@ module.exports = {
     });
   },
   async down(queryInterface, DataTypes) {
-    await queryInterface.dropTable('Comments');
+    await queryInterface.dropTable('Likes');
   }
 };

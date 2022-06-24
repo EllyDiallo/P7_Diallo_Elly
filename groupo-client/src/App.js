@@ -22,21 +22,7 @@ import './styles/main.css';
 
 function App() {
 
-  const [posts, setPosts] = useState([{
-    "id": Number,
-    "uuid": "",
-    "userId": Number,
-    "title": "",
-    "content": "",
-    "attachment": "",
-    "likes": Number,
-    "createdAt": "",
-    "updatedAt": "",
-    "user": {
-      "username": "",
-      "picture": "",
-      "uuid": ""
-    }}])
+  const [posts, setPosts] = useState([])
   const [search, setSearch ] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [postTitle, setPostTitle] = useState('');
@@ -79,17 +65,27 @@ function App() {
     setSearchResults(filteredResults.reverse());
   }, [posts, search])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
+    try {
+      const newPost = { title: postTitle,  content: postContent };
+      console.log({"NewPost: ": newPost})
+      const response = await api.post('/message/new/e45d08fb-3d00-4972-bc3f-ecc391530fa3',newPost)      
     
-    const newPost = { id, title: postTitle, content: postContent };
-    const allPosts = [...posts, newPost];
-    setPosts(allPosts);
-    setPostTitle('');
-    setPostContent('');
-    navigate('/');
-    console.log(postTitle + ' ' + postContent)
+    const allPosts = [...posts, response.data];
+      setPosts(allPosts);
+      setPostTitle('');
+      setPostContent('');
+      navigate('/');
+      console.log(response)
+
+    } catch (err) {
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+    }
+    
+    
   }
 
 

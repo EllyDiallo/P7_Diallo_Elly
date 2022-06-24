@@ -9,7 +9,7 @@ function Post({post}) {
    
   }
   return (
-    <div className="card post"  style={{width:"18rem", margin: "0.4rem"}}>
+    <div className="card post"  style={{width:"25rem", margin: "1rem"}}>
         <img src={`../${post.attachment}`}  className="card-img-top" alt="..."></img>
         <div className="card-body">
             <Link to={`/post/${post.id}`}>

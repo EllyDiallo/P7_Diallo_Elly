@@ -1,0 +1,28 @@
+.footer-container{
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.footer-logo{
+    display: flex;
+    color: beige;
+    font-size:larger;
+    height: 2rem;
+    align-items: center;
+}
+.footer{
+    &__listUl{
+        display: flex;
+        flex-direction: column;
+        margin: 2px;
+        text-align: center;
+    }
+    &__listLi{
+        margin: 0.1rem;
+    }
+}

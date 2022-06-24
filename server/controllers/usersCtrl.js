@@ -2,6 +2,7 @@
 const bcrypt = require("bcrypt");
 const jwtUtils = require('../utils/jwt.utils');
 const jwt = require('jsonwebtoken');
+const fs = require("fs")
 //const models = require('../models');
 const {Post, User} = require('../models');
 const auth = require('../middlewares/auth')
@@ -51,7 +52,7 @@ module.exports = {
           email: email,
           username: username,
           bio: bio,
-          picture: picture,
+          picture: picture ? `${req.protocol}://${req.get("host")}/images/${req.body.picture}`: "",
           password: bcryptedPassword,
           isAdmin: 0
        
@@ -195,7 +196,7 @@ module.exports = {
       })
       await userFound.update({
               bio: (bio ? bio : userFound.bio),
-              picture: (picture ? picture : userFound.picture),
+              picture: (picture ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : userFound.picture),
               username: (username ? username: userFound.username )
               
             })
@@ -254,13 +255,22 @@ module.exports = {
   deleteUser: async(req, res) => {
      
     const uuid = req.params.uuid;
+
     try {
         const user = await User.findOne({
           where: {uuid}
         })
+        const filename = user.picture.split("/images/")[1];
+            fs.unlink(`images/profil/${filename}`, (err) => {
+              if (err) throw err;
+              console.log(`${filename}`+ " was deleted");
+            })
         await user.destroy();
-        return res.json( "Votre profil a été supprimé")
-
+        return res.json( "Votre profil a été supprimé")  
+          
+        
+          
+        
       } catch (err) {
         console.log(err)
         return res.status(500).json({err: 'Something went wrong'})

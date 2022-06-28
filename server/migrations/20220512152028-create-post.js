@@ -1,6 +1,6 @@
 'use strict';
 
-var DataTypes = require('sequelize/lib/data-types');
+const DataTypes = require('sequelize/lib/data-types');
 module.exports = {
   async up(queryInterface, Datatypes) {
     await queryInterface.createTable('Posts', {
@@ -35,7 +35,7 @@ module.exports = {
       attachment: {
         allowNull: true,
         type: Datatypes.STRING,
-        defaultValue:'../images/profil/default_profil.png'
+       
       },
       likes: {
         allowNull: false,

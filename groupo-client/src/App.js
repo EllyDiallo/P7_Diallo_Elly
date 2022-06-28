@@ -27,11 +27,12 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
+  const [postAttachment, setPostAttachment] = useState('');
   const navigate = useNavigate();
 
   
-  const handleDelete = (id) => {
-    const postsList = posts.filter(post => post.id !== id);
+  const handlePostDelete = (uuid) => {
+    const postsList = posts.filter(post => post.uuid !== uuid);
     setPosts(postsList);
     
     navigate("/");
@@ -68,9 +69,20 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newPost = { title: postTitle,  content: postContent };
+      const newPost = new FormData()
+
+      newPost.append("title", postTitle)
+      newPost.append("content", postContent)
+      newPost.append("attachment", postAttachment)
+      
+
+
+      //const newPost1 = { title: postTitle,  content: postContent, attachment:  postAttachment };
       console.log({"NewPost: ": newPost})
-      const response = await api.post('/message/new/e45d08fb-3d00-4972-bc3f-ecc391530fa3',newPost)      
+      const response = await api.post('/message/new/e45d08fb-3d00-4972-bc3f-ecc391530fa3',newPost,{
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }})      
     
     const allPosts = [...posts, response.data];
       setPosts(allPosts);
@@ -104,10 +116,11 @@ function App() {
                                                     handleSubmit={handleSubmit}
                                                     postTitle={ postTitle} setPostTitle={ setPostTitle}
                                                     postContent={ postContent} setPostContent={ setPostContent}
+                                                    postAttachment={ postAttachment} setPostAttachment={setPostAttachment}
                                                   />}
                   />
                     
-                    <Route path='/post/:id' element={<PostPage posts={posts} handleDelete={handleDelete}/>}/>
+                    <Route path='/post/:uuid' element={<PostPage posts={posts} handleDelete={handlePostDelete}/>}/>
                       
                     
                     <Route path='/about' element={<About/>}/>

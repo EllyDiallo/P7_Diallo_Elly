@@ -5,7 +5,7 @@ function Feed({posts}) {
   return (
     <section className='feed  ' >
         {posts.map( (post) => (
-            <Post key={post.id} post={post}/>
+            <Post key={post.uuid} post={post}/>
         ))}
     </section>
   )

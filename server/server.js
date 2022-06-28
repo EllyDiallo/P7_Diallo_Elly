@@ -28,6 +28,8 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
+app.use('images', express.static('images'));
+
 app.use('/api/',apiRouter);
 
 app.listen({ port: 5000}, async () => {

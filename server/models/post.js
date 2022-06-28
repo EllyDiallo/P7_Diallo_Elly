@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     attachment: {
       type: DataTypes.STRING,
       allownull: true,
-      defaultValue:'../images/profil/default_profil.png'
+      
     },
     likes: {
         

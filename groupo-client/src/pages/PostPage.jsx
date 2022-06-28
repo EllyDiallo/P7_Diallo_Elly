@@ -4,14 +4,14 @@ import {useParams, Link} from 'react-router-dom';
 
 
 function PostPage({posts, handleDelete}){
-  const {id} = useParams();
-  const post = posts.find(post => (post.id).toString() === id)
+  const {uuid} = useParams();
+  const post = posts.find(post => (post.uuid).toString() === uuid)
   const date = {
    day: `${new Date(post.createdAt).toLocaleDateString('fr-FR', { weekday: 'long', year: "numeric", month: "long", day: "numeric"})}`,
    time: `${new Date(post.createdAt).toLocaleDateString('fr-FR', { hour: "2-digit", minute: "2-digit"})}`,
    
   }
-  console.log(date.time.slice(12));
+  
   return (
     <main className='PostPage d-flex justify-content-between'>
       <article className='post'>
@@ -20,7 +20,7 @@ function PostPage({posts, handleDelete}){
                         <h2>{post.title}</h2>
                         <p className="postDate">{ "Posté le " + date.day }<br/>{ "à " + date.time.slice(12,-3) + "h" + date.time.slice(15)}</p>
                         <p className="postBody">{post.content}</p>
-                        <button onClick={() => handleDelete(post.id)}>
+                        <button onClick={() => handleDelete(post.uuid)}>
                             Delete Post
                         </button>
                     </>

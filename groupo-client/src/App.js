@@ -31,10 +31,16 @@ function App() {
   const navigate = useNavigate();
 
   
-  const handlePostDelete = (uuid) => {
+  const handlePostDelete = async (uuid) => {
+   
+    try {
+      await api.delete(`message/delete/${uuid}`)
+    } catch (err) {
+      console.log(err)
+    }
     const postsList = posts.filter(post => post.uuid !== uuid);
     setPosts(postsList);
-    
+    console.log(uuid)
     navigate("/");
   }
   

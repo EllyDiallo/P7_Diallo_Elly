@@ -9,11 +9,13 @@ function Post({post}) {
    time: `${new Date(post.createdAt).toLocaleDateString('fr-FR', { hour: "2-digit", minute: "2-digit"})}`,
    
   }
+  const sourceImage = post.attachment.split('public')
+  
  
   return (
     <Link  to={`/post/${post.uuid}`}>
       <div className="card post"  style={{width:"25rem", margin: "1rem"}}>
-          <img src={`../../../server/${post.attachment}`}  className="card-img-top" alt="..."></img>
+          <img src={`${sourceImage[1]}`}  className="card-img-top" alt={` ${post.title}`}></img>
           <div className="card-body">
               
                   <h2 className='card-title'>{post.title.toUpperCase()}</h2>

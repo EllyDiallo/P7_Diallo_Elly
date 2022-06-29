@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
-app.use('images', express.static('images'));
+app.use('images', express.static('../groupo-client/public/images'));
 
 app.use('/api/',apiRouter);
 

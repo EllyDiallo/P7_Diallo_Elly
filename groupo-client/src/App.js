@@ -1,14 +1,16 @@
 import Home from "./pages/Home";
 import About from "./pages/About"; 
 import Missing from "./pages/Missing";
-
 import NewPost from "./pages/NewPost";
 import PostPage from "./pages/PostPage";
-import EditPost from "./componnents/editPost";
 
+import EditPost from "./componnents/editPost";
 import Footer from "./componnents/Footer";
 import Header from "./componnents/Header";
 import Nav from "./componnents/Nav";
+
+import useWindowSize from "./hooks/useWindowSize";
+import useAxiosFetch from "./hooks/useAxiosFetch";
 
 import api from './Api/getAxios';
 
@@ -33,14 +35,19 @@ function App() {
   const [editContent, setEditContent] = useState('');
   const [editAttachment, setEditAttachment] = useState('');
   const [postAttachment, setPostAttachment] = useState('');
+  const { width } = useWindowSize();
   const navigate = useNavigate();
 
   
- 
+  const { data, fetchError, isLoading } = useAxiosFetch('messages');
+
+  useEffect(() => {
+    setPosts(data);
+  }, [data])
 
   
   
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchPost = async () => {
       try {
         const response = await api.get('/messages');
@@ -58,7 +65,7 @@ function App() {
       }
     }
       fetchPost();
-  },[])
+  },[])*/
 
   useEffect(() => {
     const filteredResults = posts.filter((post) =>
@@ -155,12 +162,15 @@ function App() {
     
 
     
-      <Header title={"Groupomania"}/>
+      <Header title={"Groupomania"} width={width}/>
       <Nav search={search} setSearch={setSearch}/>
       
-      <div className="containerMain">
+      <div className="containerMain d-flex w-100 h-100 flex-column justify-content-center align-items-center">
           <Routes>
-                  <Route exact path="/"   element={<Home posts={searchResults}/>}/>
+                  <Route exact path="/"   element={<Home 
+                                                          posts={searchResults}
+                                                          fetchError={fetchError}
+                                                          isLoading={isLoading}/>}/>
                   <Route path='/post'     element={<NewPost 
                                                           handleSubmit={handleSubmit}
                                                           postTitle={ postTitle} setPostTitle={ setPostTitle}

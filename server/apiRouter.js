@@ -23,9 +23,11 @@ exports.router = (function(){
     apiRouter.route('/users').get(usersCtrl.getAllprofiles);
     
 
-    apiRouter.route('/message/new/:uuid').post( multer,postsCtrl.createPost);
+    
     apiRouter.route('/messages').get(postsCtrl.listPosts);
     apiRouter.route('/message/delete/:uuid').delete(postsCtrl.deletePost);
+    apiRouter.route('/message/new/:uuid').post( multer, postsCtrl.createPost);
+    apiRouter.route('/message/update/:uuid').put(multer, postsCtrl.updatePost);
 
 
     apiRouter.route('/comment/new/:uuid').post(commentsCtrl.createComment);

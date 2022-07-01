@@ -1,8 +1,10 @@
 import Home from "./pages/Home";
 import About from "./pages/About"; 
 import Missing from "./pages/Missing";
+
 import NewPost from "./pages/NewPost";
 import PostPage from "./pages/PostPage";
+import EditPost from "./componnents/editPost";
 
 import Footer from "./componnents/Footer";
 import Header from "./componnents/Header";
@@ -27,22 +29,16 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
+  const [editTitle, setEditTitle] = useState('');
+  const [editContent, setEditContent] = useState('');
+  const [editAttachment, setEditAttachment] = useState('');
   const [postAttachment, setPostAttachment] = useState('');
   const navigate = useNavigate();
 
   
-  const handlePostDelete = async (uuid) => {
-   
-    try {
-      await api.delete(`message/delete/${uuid}`)
-    } catch (err) {
-      console.log(err)
-    }
-    const postsList = posts.filter(post => post.uuid !== uuid);
-    setPosts(postsList);
-    console.log(uuid)
-    navigate("/");
-  }
+ 
+
+  
   
   useEffect(() => {
     const fetchPost = async () => {
@@ -72,7 +68,10 @@ function App() {
     setSearchResults(filteredResults.reverse());
   }, [posts, search])
 
-  const handleSubmit = async (e) => {
+
+
+
+  const handleSubmit = async (e,uuid) => {
     e.preventDefault();
     try {
       const newPost = new FormData()
@@ -106,6 +105,50 @@ function App() {
     
   }
 
+  const handleEdit = async (uuid,e) => {
+    
+   
+    
+    
+    console.log(uuid)
+    
+    try {
+
+      const newEditPost = new FormData()
+
+      newEditPost.append("title", editTitle)
+      newEditPost.append("content", editContent)
+      newEditPost.append("attachment", editAttachment)
+      console.log(newEditPost);
+
+      const response = await api.put(`/message/update/${uuid}`, newEditPost,{
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }});
+    console.log(response.data);
+      setPosts(posts.map(post => post.uuid === uuid ? { ...response.data } : post));
+      setEditTitle(editTitle);
+      setEditContent(editContent);
+      setEditAttachment(editAttachment);
+      navigate('/');;
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+  }
+
+   const handlePostDelete = async (uuid) => {
+   
+    try {
+      await api.delete(`message/delete/${uuid}`)
+    } catch (err) {
+      console.log(err)
+    }
+    const postsList = posts.filter(post => post.uuid !== uuid);
+    setPosts(postsList);
+    
+    navigate("/");
+  }
+
 
   return (
     <>
@@ -117,20 +160,31 @@ function App() {
       
       <div className="containerMain">
           <Routes>
-                    <Route exact path="/" element={<Home posts={searchResults}/>}/>
-                    <Route path='/post' element={<NewPost 
-                                                    handleSubmit={handleSubmit}
-                                                    postTitle={ postTitle} setPostTitle={ setPostTitle}
-                                                    postContent={ postContent} setPostContent={ setPostContent}
-                                                    postAttachment={ postAttachment} setPostAttachment={setPostAttachment}
+                  <Route exact path="/"   element={<Home posts={searchResults}/>}/>
+                  <Route path='/post'     element={<NewPost 
+                                                          handleSubmit={handleSubmit}
+                                                          postTitle={ postTitle} setPostTitle={ setPostTitle}
+                                                          postContent={ postContent} setPostContent={ setPostContent}
+                                                          postAttachment={ postAttachment} setPostAttachment={setPostAttachment}
                                                   />}
                   />
+                  <Route path="/edit/:uuid" element={<EditPost
+                                                          posts={posts}
+                                                          handleEdit={handleEdit}
+                                                          editTitle={editTitle} setEditTitle={setEditTitle}                                 
+                                                          editContent={editContent} setEditContent={setEditContent}
+                                                          editAttachment={editAttachment} setEditAttachment={setEditAttachment}
+                                                          
+                                              />}/>
+                                              
+        
+
                     
-                    <Route path='/post/:uuid' element={<PostPage posts={posts} handleDelete={handlePostDelete}/>}/>
+                  <Route path='/post/:uuid' element={<PostPage posts={posts} handleDelete={handlePostDelete}/>}/>
                       
                     
-                    <Route path='/about' element={<About/>}/>
-                    <Route path='*' element={<Missing/>}/>
+                  <Route path='/about' element={<About/>}/>
+                  <Route path='*' element={<Missing/>}/>
 
                     
           </Routes>

@@ -18,6 +18,7 @@ module.exports = {
     const uuid = req.params.uuid;
         
     const { title, content, likes} = req.body
+    const attachment = req.file ? req.file.path : "";
 
     try {
         const user = await User.findOne({where: {uuid}})
@@ -27,7 +28,7 @@ module.exports = {
           content, 
           likes,
           userId: user.id,
-          attachment: req.file.path
+          attachment: attachment 
         })
 
         return res.status(200).json(post)
@@ -72,5 +73,32 @@ module.exports = {
         
       }
 
+  },
+  updatePost: async (req, res) => {
+
+   
+    const uuid = req.params.uuid;
+    const { title, content, likes} = req.body;
+    //const attachment = req.file.path;
+
+    try { 
+
+      const postFound = await Post.findOne({
+        where: {uuid}
+      })
+      await postFound.update({
+              title: title ? title : postFound.title,
+              attachment: req.file ? req.file.path : postFound.attachment,
+              content: content ? content : postFound.content ,
+              likes: postFound.likes
+              
+            })
+            .then((postModificated) => res.status(200).send(postModificated))
+            .catch((err => res.status(500).send({"mess ": err})))
+      
+    } catch (error) {
+       return res.status(500).json( error + " unable to modify user 2")
+    }
+    
   }
 }

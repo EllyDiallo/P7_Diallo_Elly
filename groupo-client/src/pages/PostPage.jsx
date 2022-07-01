@@ -23,6 +23,7 @@ function PostPage({posts, handleDelete}){
                         <button onClick={() => handleDelete(post.uuid)}>
                             Delete Post
                         </button>
+                         <Link to={`/edit/${post.uuid}`}><button className="btn-dark btn-outline-danger">Edit Post</button></Link>
                     </>
                 }
                 {!post &&

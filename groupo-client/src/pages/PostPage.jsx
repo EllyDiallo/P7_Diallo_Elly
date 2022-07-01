@@ -11,19 +11,21 @@ function PostPage({posts, handleDelete}){
    time: `${new Date(post.createdAt).toLocaleDateString('fr-FR', { hour: "2-digit", minute: "2-digit"})}`,
    
   }
-  
+   const sourceImage = post.attachment.split('public')
+
   return (
-    <main className='PostPage d-flex justify-content-between'>
+    <main className='edit d-flex  justify-content-center align-items-center h-50 d-flex p-6 w-50'>
       <article className='post'>
         {post &&
                     <>
-                        <h2>{post.title}</h2>
+                        <h2 className='text-center'>{post.title.toUpperCase()}</h2>
+                        <img src={`${sourceImage[1]}`}  className="card-img-top" alt={` ${post.title}`}></img>
                         <p className="postDate">{ "Posté le " + date.day }<br/>{ "à " + date.time.slice(12,-3) + "h" + date.time.slice(15)}</p>
-                        <p className="postBody">{post.content}</p>
-                        <button onClick={() => handleDelete(post.uuid)}>
+                        <p className="postContent">{post.content}</p>
+                        <button className=' btn btn-dark btn-outline-danger' onClick={() => handleDelete(post.uuid)}>
                             Delete Post
                         </button>
-                         <Link to={`/edit/${post.uuid}`}><button className="btn-dark btn-outline-danger">Edit Post</button></Link>
+                         <Link to={`/edit/${post.uuid}`}><button className="btn btn-outline-danger btn-warning">Edit Post</button></Link>
                     </>
                 }
                 {!post &&

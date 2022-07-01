@@ -14,7 +14,7 @@ function Post({post}) {
  
   return (
     <Link  to={`/post/${post.uuid}`}>
-      <div className="card post"  style={{width:"19rem", margin: "1rem"}}>
+      <div className="card post shadow"  style={{width:"19rem", margin: "1rem"}}>
           <img src={`${sourceImage[1]}`}  className="card-img-top" alt={` ${post.title}`}></img>
           <div className="card-body">
               

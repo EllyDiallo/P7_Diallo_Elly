@@ -5,9 +5,9 @@ function NewPost({
   handleSubmit, postTitle, setPostTitle, postContent, setPostContent, setPostAttachment
 }) {
   return (
-   <main className="container   h-100 m-6  ">
+   <main className="container h-100 m-6  ">
             <h2>New Post</h2>
-            <form className= " m-auto bd-highlight  row justify-content-center my-3 " onSubmit={handleSubmit} encType="multipart/form-data">
+            <form className= " formNewPost m-auto bd-highlight  row justify-content-center my-3  p-3" onSubmit={handleSubmit} encType="multipart/form-data">
 
               <div className="col-5">
                 <label className='form-label' htmlFor="postTitle">Title:</label>
@@ -45,7 +45,7 @@ function NewPost({
                 />
               </div>
                 
-                <button className='btn btn-primary mt-5' type="submit">Submit</button>
+                <button className='btn btn-danger mt-5' type="submit">Submit</button>
             </form>
         </main>
   )

@@ -2,12 +2,12 @@ import React from 'react'
 import { Link } from "react-router-dom";
 function Nav({search, setSearch}) {
   return (
-    <nav className="navbar navbar-expand-lg bg-dark text-light">
+    <nav className="navbar navbar-expand-lg bg-dark text-light ">
         <div className="container-fluid">
             
             <form className='searchForm' onSubmit={(e) => e.preventDefault()}>
-                <label htmlFor='search text-light'>Search post : </label>
-                <input 
+                <label  htmlFor='search'></label>
+                <input className='search'
                 id='search'
                 type="text"
                 placeholder='Search Post'

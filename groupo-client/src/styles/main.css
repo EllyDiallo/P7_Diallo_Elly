@@ -6,13 +6,9 @@
       flex-wrap: wrap;
 }
 
-main {
-  background-color: rgba(215, 244, 176, 0.773);
-}
-
 .footer-container {
   width: 100%;
-  background-color: black;
+  background-color: #b04747;
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;

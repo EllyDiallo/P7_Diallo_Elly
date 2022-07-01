@@ -165,7 +165,7 @@ function App() {
       <Header title={"Groupomania"} width={width}/>
       <Nav search={search} setSearch={setSearch}/>
       
-      <div className="containerMain d-flex w-100 h-100 flex-column justify-content-center align-items-center">
+      <div className="containerMain d-flex  min-vh-100 w-100 h-100 flex-column justify-content-center align-items-center">
           <Routes>
                   <Route exact path="/"   element={<Home 
                                                           posts={searchResults}

@@ -1,3 +1,13 @@
+
+$primary: #FD2D01;
+$secondary :#FFD7D7 ;
+$tertiary: #4E5166;
+$light: #f5cef5;
+$info : #c89dda;
+$warning :#fdd8cdfa;
+$dark: #ff7e7e;
+$danger : #cbff9a;
+
 * {
     margin: 0;
     font-family: 'Roboto', sans-serif;
@@ -19,8 +29,13 @@ output, section, summary, time, mark, audio, video {
     list-style-type: none;
     }
 
+main{
+    background-color: $secondary;
+}
+
 .containerMain{
     height: max-content;
+    background-color: $tertiary;
 }
 
 a {
@@ -28,15 +43,16 @@ a {
     text-decoration: none;
     padding: 2px 1px 0;
     &:link{
-        color: rgb(70, 212, 74);
+        color: $primary;
         text-decoration: none;
     }
     &:visited{
-        color: rgb(70, 212, 74);
+        color: $primary;
         text-decoration: none;
     }
     &:hover{
-        text-shadow: 3px 3px 3px rgb(78, 139, 119);
+        text-shadow: 3px 3px 3px #4E5166;
+        color: $primary;
         
     }
     
@@ -55,3 +71,38 @@ button:disabled{
     opacity: 0.35;
 }
 
+.search{
+    background-color: $secondary;
+    
+}
+
+.formNewPost{
+    -webkit-box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px, red 0 -18px 40px, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: #FFF 0 -1px 4px, rgb(197, 197, 43) 0 -2px 10px, #ee9841 0 -10px 20px, rgb(207, 98, 98) 0 -18px 40px, 5px 5px 15px 5px rgba(0,0,0,0);
+    background: $tertiary;
+    color: #FFF;
+}
+
+.btn{
+    margin: 1rem;
+}
+
+.edit{
+    padding: 1rem;
+    
+}
+
+.postDate{
+    color: $tertiary;
+}
+.postContent{
+    color: black;
+    text-align: center;
+    font-size: large;
+}
+
+img{
+    object-fit: cover;
+    border-radius: 2%;
+    width: 40vw;
+}

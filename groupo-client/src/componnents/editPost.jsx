@@ -17,7 +17,7 @@ const EditPost = ({
     }, [post, setEditTitle, setEditContent, setEditAttachment])
 
     return (
-        <main className="container   h-100 m-6  ">
+        <main className="container   h-100 m-6 " style={{backgroundColor: "$secondary"}}>
             
             { {editTitle , editContent} &&
             <>

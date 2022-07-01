@@ -18,10 +18,15 @@ output, section, summary, time, mark, audio, video {
   list-style-type: none;
 }
 
+main {
+  background-color: #FFD7D7;
+}
+
 .containerMain {
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
+  background-color: #4E5166;
 }
 
 a {
@@ -31,17 +36,18 @@ a {
 }
 
 a:link {
-  color: #46d44a;
+  color: #FD2D01;
   text-decoration: none;
 }
 
 a:visited {
-  color: #46d44a;
+  color: #FD2D01;
   text-decoration: none;
 }
 
 a:hover {
-  text-shadow: 3px 3px 3px #4e8b77;
+  text-shadow: 3px 3px 3px #4E5166;
+  color: #FD2D01;
 }
 
 .error {
@@ -55,5 +61,41 @@ a:hover {
 
 button:disabled {
   opacity: 0.35;
+}
+
+.search {
+  background-color: #FFD7D7;
+}
+
+.formNewPost {
+  -webkit-box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px, red 0 -18px 40px, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: #FFF 0 -1px 4px, #c5c52b 0 -2px 10px, #ee9841 0 -10px 20px, #cf6262 0 -18px 40px, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  background: #4E5166;
+  color: #FFF;
+}
+
+.btn {
+  margin: 1rem;
+}
+
+.edit {
+  padding: 1rem;
+}
+
+.postDate {
+  color: #4E5166;
+}
+
+.postContent {
+  color: black;
+  text-align: center;
+  font-size: large;
+}
+
+img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 2%;
+  width: 40vw;
 }
 /*# sourceMappingURL=style.css.map */

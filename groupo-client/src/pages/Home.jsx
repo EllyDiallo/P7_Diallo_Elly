@@ -6,7 +6,7 @@ import Feed from '../componnents/Feed'
 
 function Home({posts, isLoading, fetchError}) {
   return (
-      <main className='container-fluid min-vh-100 d-flex  flex-row justify-content-center align-items-center ' style={{height: "100%"}} >
+      <main className='container-fluid min-vh-100  w-50 d-flex  flex-row justify-content-center align-items-center ' style={{height: "100%"}} >
 
             {isLoading && <>
             <div className="spinner-border" style={{width: "3rem", height: "3rem"}} role="status">

@@ -1,9 +1,46 @@
-import React from 'react'
+import React from 'react';
+import { useContext, useState } from 'react'; 
+import { useNavigate } from "react-router-dom";
+import DataContext from '../context/DataContext'; 
+import api from '../Api/getAxios';
 
+function NewPost() {
+    const { posts, setPosts} = useContext(DataContext);
+    
+    const [postTitle, setPostTitle] = useState('');
+    const [postContent, setPostContent] = useState('');
+    const [postAttachment, setPostAttachment] = useState('');
 
-function NewPost({
-  handleSubmit, postTitle, setPostTitle, postContent, setPostContent, setPostAttachment
-}) {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e,uuid) => {
+    e.preventDefault();
+    try {
+      const newPost = new FormData()
+
+      newPost.append("title", postTitle)
+      newPost.append("content", postContent)
+      newPost.append("attachment", postAttachment)
+      console.log({"NewPost: ": newPost})
+
+      const response = await api.post('/message/new/e45d08fb-3d00-4972-bc3f-ecc391530fa3',newPost,{
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }})      
+    const allPosts = [...posts, response.data];
+      setPosts(allPosts);
+      setPostTitle('');
+      setPostContent('');
+      navigate('/');
+      console.log(response)
+    } catch (err) {
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+    }
+  }
+
+  
   return (
    <main className="container h-100 m-6  ">
             <h2>New Post</h2>

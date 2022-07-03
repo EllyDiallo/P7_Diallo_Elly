@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-function Nav({search, setSearch}) {
+import { useContext } from 'react'; 
+import DataContext from '../context/DataContext';
+
+function Nav() {
+   const { search, setSearch} = useContext(DataContext);
   return (
     <nav className="navbar navbar-expand-lg bg-dark text-light ">
         <div className="container-fluid">

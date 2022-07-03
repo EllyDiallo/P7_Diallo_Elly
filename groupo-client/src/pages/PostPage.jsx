@@ -1,9 +1,12 @@
 import React from 'react'
-import {useParams, Link} from 'react-router-dom';
+import {useParams, Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react'; 
+import DataContext from '../context/DataContext';
+import api from '../Api/getAxios';
 
+function PostPage(){
 
-
-function PostPage({posts, handleDelete}){
+  const {posts, setPosts} = useContext(DataContext);
   const {uuid} = useParams();
   const post = posts.find(post => (post.uuid).toString() === uuid)
   const date = {
@@ -11,8 +14,21 @@ function PostPage({posts, handleDelete}){
    time: `${new Date(post.createdAt).toLocaleDateString('fr-FR', { hour: "2-digit", minute: "2-digit"})}`,
    
   }
-   const sourceImage = post.attachment.split('public')
-
+  const sourceImage = post.attachment.split('public')
+  const navigate = useNavigate();
+  const handlePostDelete = async (uuid) => {
+    
+      try {
+        await api.delete(`message/delete/${uuid}`)
+      } catch (err) {
+        console.log(err)
+      }
+      const postsList = posts.filter(post => post.uuid !== uuid);
+      setPosts(postsList);
+      
+      navigate("/");
+    }
+  
   return (
     <main className='edit d-flex  justify-content-center align-items-center h-50 d-flex p-6 w-50'>
       <article className='post'>
@@ -22,7 +38,7 @@ function PostPage({posts, handleDelete}){
                         <img src={`${sourceImage[1]}`}  className="card-img-top" alt={` ${post.title}`}></img>
                         <p className="postDate">{ "Posté le " + date.day }<br/>{ "à " + date.time.slice(12,-3) + "h" + date.time.slice(15)}</p>
                         <p className="postContent">{post.content}</p>
-                        <button className=' btn btn-dark btn-outline-danger' onClick={() => handleDelete(post.uuid)}>
+                        <button className=' btn btn-dark btn-outline-danger' onClick={() => handlePostDelete(post.uuid)}>
                             Delete Post
                         </button>
                          <Link to={`/edit/${post.uuid}`}><button className="btn btn-outline-danger btn-warning">Edit Post</button></Link>

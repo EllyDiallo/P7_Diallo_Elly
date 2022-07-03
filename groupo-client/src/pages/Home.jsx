@@ -1,10 +1,11 @@
 import React from 'react'
-
-/*import HomeIcon from '@mui/icons-material/Home';*/
 import Feed from '../componnents/Feed'
+import { useContext } from 'react'; 
+import DataContext from '../context/DataContext'; 
 
 
-function Home({posts, isLoading, fetchError}) {
+function Home() {
+  const { searchResults, isLoading, fetchError} = useContext(DataContext);
   return (
       <main className='container-fluid min-vh-100  w-50 d-flex  flex-row justify-content-center align-items-center ' style={{height: "100%"}} >
 
@@ -17,7 +18,7 @@ function Home({posts, isLoading, fetchError}) {
             </div>
             </>}
             {!isLoading && fetchError && <p className="statusMsg" style={{ color: "red" }}>{fetchError}</p>}
-            {!isLoading && !fetchError && (posts.length ? <Feed posts={posts} /> : <p className="statusMsg">No posts to display.</p>)}
+            {!isLoading && !fetchError && (searchResults.length ? <Feed posts={searchResults} /> : <p className="statusMsg">No posts to display.</p>)}
         </main>
       
         

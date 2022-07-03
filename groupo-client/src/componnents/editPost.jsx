@@ -1,13 +1,16 @@
-import { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useContext, useState} from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import DataContext from '../context/DataContext'; 
+import api from '../Api/getAxios';
 
-const EditPost = ({
-    posts, handleEdit, editContent, setEditContent, editTitle, setEditTitle, setEditAttachment, editAttachment
-}) => {
+const EditPost = () => {
+    const { posts, setPosts } = useContext(DataContext);
+    const [editTitle, setEditTitle] = useState('');
+    const [editContent, setEditContent] = useState('');
+    const [editAttachment, setEditAttachment] = useState('');
     const { uuid } = useParams();
+    const navigate = useNavigate();
     const post = posts.find(post => (post.uuid).toString() === uuid);
-    console.log(post);
-
     useEffect(() => {
         if (post) {
             setEditTitle(post.title);
@@ -15,6 +18,33 @@ const EditPost = ({
             setEditAttachment(post.attachment);
         }
     }, [post, setEditTitle, setEditContent, setEditAttachment])
+
+  const handleEdit = async (uuid,e) => {
+    console.log(uuid)
+    
+    try {
+
+      const newEditPost = new FormData()
+
+      newEditPost.append("title", editTitle)
+      newEditPost.append("content", editContent)
+      newEditPost.append("attachment", editAttachment)
+      console.log(newEditPost);
+
+      const response = await api.put(`/message/update/${uuid}`, newEditPost,{
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }});
+    console.log(response.data);
+      setPosts(posts.map(post => post.uuid === uuid ? { ...response.data } : post));
+      setEditTitle(editTitle);
+      setEditContent(editContent);
+      setEditAttachment(editAttachment);
+      navigate('/');;
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+  }
 
     return (
         <main className="container   h-100 m-6 " style={{backgroundColor: "$secondary"}}>

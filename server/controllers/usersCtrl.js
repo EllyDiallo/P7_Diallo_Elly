@@ -70,7 +70,7 @@ module.exports = {
       }
     ], function(newUser) {
       if (newUser) {
-        console.log(newUser.password)
+        console.log(newUser.password)// to delete 
         return res.status(201).json({
           'uuid':newUser.uuid,
           'pseudo':newUser.username

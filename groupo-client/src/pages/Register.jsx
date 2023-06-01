@@ -4,11 +4,13 @@ import { useRef, useState, useEffect } from "react";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import api from '../Api/getAxios';
 
-
+const isAdmin = 0;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$/
+const REGISTER_URL = "/users/register";
 
 
 /*const REGISTER_URL = '/register';*/
@@ -18,8 +20,6 @@ const Register = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-
-  const admiSecretCode = 'power';
 
   const [user, setUser] = useState('');
   const [validName, setValidName] = useState(false);
@@ -37,11 +37,6 @@ const Register = () => {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  const [isAdmin, setIsAdmin] = useState(0);
-  const [codeAdmi, setCodeAdmi] = useState(false);
-  const [secretword, setsecretword] = useState('');
-  const [errMsgAdmi, setErrMsgadmi] = useState('');
-
 
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
@@ -49,14 +44,11 @@ const Register = () => {
   useEffect(() => {
     userRef.current.focus();
   }, []);
-  useEffect(() => {
-    console.log("isAdmin : " + isAdmin);
-    setCodeAdmi(!codeAdmi);
-    console.log("input disponible ?  " + codeAdmi);
-  }, [isAdmin]);
+
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
+    console.log(user);
     setValidName(result);
   }, [user]);
 
@@ -66,28 +58,7 @@ const Register = () => {
     setValidEmail(resultRegexEmail);
   }, [email]);
 
-  useEffect((e, codeAdmi) => {
 
-    console.log("secretCode: " + secretword + "  input ouvert ? " + codeAdmi);
-
-  }, [secretword])
-
-  const handleCode = async (e) => {
-    e.preventDefault();
-
-
-    if (secretword === admiSecretCode) {
-      console.log(secretword + " et " + admiSecretCode)
-      console.log(codeAdmi + " vérif id")
-      setCodeAdmi(true);
-      console.log(codeAdmi + " vérif id apres")
-
-
-    }
-    setErrMsgadmi('veuillez entrer votre code');
-    console.log(codeAdmi);
-
-  }
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
@@ -103,16 +74,60 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
     const v3 = EMAIL_REGEX.test(email);
-    console.log(v1 + v2 + v3);
+
     if (!v1 || !v2 || !v3) {
       setErrMsg("Entrée invalide");
       return;
     }
-    console.log(user, pwd, email);
-    setSuccess(true);
+
+
+    try {
+      //const newUser = new FormData() 
+
+      /*newUser.append("username", user)
+      newUser.append("email", email)
+      newUser.append("password", pwd)
+      newUser.append("isAdmin", 0)
+      console.log({ "NewUser": newUser })*/
+
+
+      const response = await api.post(REGISTER_URL,
+        JSON.stringify({ username: user, email, password: pwd, isAdmin: isAdmin }), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': "*"
+        },
+        withCredentials: true
+      })
+      console.log(response.data);
+      console.log(response.accessToken);
+      console.log(JSON.stringify(response));
+
+
+
+      setSuccess(true);
+
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg('No server response');
+      } else if (err.response?.status === 409) {
+        setErrMsg('UserName taken');
+      } else {
+        setErrMsg('Registration failed');
+      }
+      errRef.current.focus();
+      console.log(err.response.data);
+      console.log(err.response.status);
+      console.log(err.response.headers);
+      console.log("username: " + user, "email: " + email, "isAdmin: " + isAdmin, "pwd: " + pwd);
+
+      //clear input (todo)
+    }
+
   }
 
 
@@ -225,27 +240,6 @@ const Register = () => {
               <CheckOutlinedIcon />
               Doit correspondre au premier champ de saisie du mot de passe.
             </p>
-
-            <label htmlFor='admin'>
-              Autorisations ?
-            </label>
-            <select onChange={(e) => setIsAdmin(e.target.value)} name="admin" id="admin">
-              <option value={0}>Employé(e)</option>
-              <option value={1}>Administrateur</option>
-            </select>
-            <>
-              {(isAdmin.valueOf === 1) ? (
-                <>
-                  <label htmlFor='codeAdmi'></label>
-                  <input onChange={(e) => setsecretword(e.target.value)} type='password' placeholder='entrez le code' id='codeAdmi' />
-                  <button onClick={(e) => handleCode(e)} id='codeAdmi'>valider</button>
-                </>
-
-              ) : (
-                <p></p>
-              )}
-            </>
-
 
             <button disabled={!validName || !validPwd || !validMatch ? true : false}>
               Enregistez vous !

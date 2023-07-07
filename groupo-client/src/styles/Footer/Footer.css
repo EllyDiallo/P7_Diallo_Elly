@@ -1,44 +1,26 @@
 .footer-container {
   width: 100%;
-  background-color: #b04747;
+  background-color: rgb(176, 71, 71);
   color: white;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .footer-logo {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   color: beige;
   font-size: larger;
   height: 2rem;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .footer__listUl {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   margin: 2px;
   text-align: center;
 }
-
 .footer__listLi {
   margin: 0.1rem;
-}
-/*# sourceMappingURL=Footer.css.map */
+}/*# sourceMappingURL=Footer.css.map */

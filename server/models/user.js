@@ -13,24 +13,24 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Post, {
-        foreignKey:'userId',
-        as:'posts'
+        foreignKey: 'userId',
+        as: 'posts'
       });
       this.hasMany(models.Comment, {
-        foreignKey:'userId',
-        as:'comments'
+        foreignKey: 'userId',
+        as: 'comments'
       })
     }
-   /* toJSON(){
-      return {...this.get(), id: undefined}
-    }*/
+    /* toJSON(){
+       return {...this.get(), id: undefined}
+     }*/
   }
   User.init({
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-   
+
     email: {
       type: DataTypes.STRING,
       allowNull: false
@@ -39,21 +39,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    bio:  {
+    bio: {
       type: DataTypes.STRING,
       allowNull: true
     },
     picture: {
       type: DataTypes.STRING,
-      defaultValue:'../images/profil/default_profil.png',
+      defaultValue: '../images/profil/default_profil.png',
       allowNull: true
-      },
+    },
     password: DataTypes.STRING,
     isAdmin: DataTypes.INTEGER
-  
+
   }, {
     sequelize,
-    tableName:'users',
+    tableName: 'users',
     modelName: 'User',
   });
   return User;

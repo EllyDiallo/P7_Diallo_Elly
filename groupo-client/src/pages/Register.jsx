@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
@@ -13,12 +13,10 @@ const EMAIL_REGEX = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$/
 const REGISTER_URL = "/users/register";
 
 
-/*const REGISTER_URL = '/register';*/
-
-
 const Register = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
 
   const [user, setUser] = useState('');
@@ -110,6 +108,7 @@ const Register = () => {
 
 
       setSuccess(true);
+      setTimeout(() => navigate('/login'), 2500);
 
     } catch (err) {
       if (!err?.response) {
@@ -137,7 +136,7 @@ const Register = () => {
       {success ? (
         <section>
           <h1>Success.!</h1>
-          <p><Link to="/signUp">Connexion</Link></p>
+          <p><Link to="/login">Connexion</Link></p>
         </section>
 
       ) : (
@@ -157,6 +156,7 @@ const Register = () => {
               ref={userRef}
               autoComplete='off'
               onChange={(e) => setUser(e.target.value)}
+              value={user}
               required
               aria-invalid={validName ? "false" : "true"}
               aria-describedby="uidnote"
@@ -248,7 +248,7 @@ const Register = () => {
               Vous avez déjà un compte ?<br />
               <span className="line">
                 {/*put router link here*/}
-                <Link to={'/signUp'}>Connectez vous.</Link>
+                <Link to={'/login'}>Connectez vous.</Link>
               </span>
             </p>
 
@@ -257,27 +257,7 @@ const Register = () => {
       )}
 
     </>
-    /*<div className="login-container">
-      <div className="login-wrapper">
-        <div className="login-left">
-          <h3 className="login-logo">Groupomania</h3>
-          <span className="login-desc">
-            Connect with coworkers  around you on Groupomania social club.
-          </span>
-        </div>
-        <div className="login-right">
-          <div className="login-box">
-            <input placeholder="Email" className="login-input" />
-            <input placeholder="Password" className="login-input" />
-            <input placeholder="user Name" className="login-input" />
-            <button className="login-button">Log In</button>
-            <button className="login-registerButton">
-              Log into your app
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>*/
+
   )
 }
 

@@ -2,40 +2,23 @@
   width: 100vw;
   height: 100vh;
   background-color: #f0f2f5;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-wrapper {
   width: 70%;
   height: 70%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 
 .login-left,
 .login-right {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  flex: 1;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .login-logo {
@@ -54,16 +37,9 @@
   padding: 20px;
   background-color: white;
   border-radius: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .login-input {
@@ -73,7 +49,6 @@
   font-size: 18px;
   padding-left: 20px;
 }
-
 .login-input:focus {
   outline: none;
 }
@@ -91,9 +66,7 @@
 
 .login-registerButton {
   width: 60%;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
+  align-self: center;
   height: 50px;
   border-radius: 10px;
   border: none;
@@ -102,5 +75,4 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
-}
-/*# sourceMappingURL=Login.css.map */
+}/*# sourceMappingURL=Login.css.map */
